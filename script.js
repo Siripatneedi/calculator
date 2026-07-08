@@ -1,63 +1,42 @@
-// Get the display
 const display = document.getElementById("display");
 
-// Add value to display
-function appendValue(value) {
+function appendValue(value){
     display.value += value;
 }
 
-// Clear display
-function clearDisplay() {
+function clearDisplay(){
     display.value = "";
 }
 
-// Delete the last character
-function deleteLast() {
-    display.value = display.value.slice(0, -1);
+function deleteLast(){
+    display.value = display.value.slice(0,-1);
 }
 
-// Calculate the result
-function calculate() {
-    try {
-        if (display.value === "") {
-            display.value = "";
-            return;
-        }
-
+function calculate(){
+    try{
         display.value = eval(display.value);
-    } catch (error) {
+    }
+    catch{
         display.value = "Error";
     }
 }
 
-// Keyboard Support
-document.addEventListener("keydown", function (event) {
+document.addEventListener("keydown",function(event){
 
-    const key = event.key;
-
-    // Numbers
-    if (!isNaN(key)) {
-        appendValue(key);
+    if(!isNaN(event.key) || "+-*/.%".includes(event.key)){
+        appendValue(event.key);
     }
 
-    // Operators
-    else if (["+", "-", "*", "/", "."].includes(key)) {
-        appendValue(key);
-    }
-
-    // Enter key
-    else if (key === "Enter") {
+    if(event.key==="Enter"){
         event.preventDefault();
         calculate();
     }
 
-    // Backspace
-    else if (key === "Backspace") {
+    if(event.key==="Backspace"){
         deleteLast();
     }
 
-    // Escape
-    else if (key === "Escape") {
+    if(event.key==="Escape"){
         clearDisplay();
     }
 });
